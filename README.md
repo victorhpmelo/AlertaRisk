@@ -2,7 +2,7 @@
 🚨 Monitoramento de zonas de risco e alertas para prevenir catástrofes causadas pelas chuvas.
 
 ## 📌 Introdução
-O AlertaRisk é uma plataforma desenvolvida para prever e alertar sobre possíveis alagamentos em áreas de risco. Com base no volume de chuvas e dados geográficos, o sistema informa a população por WhatsApp e SMS, além de fornecer medidas preventivas e orientações de segurança.
+O AlertaRisk é uma plataforma desenvolvida para prever e alertar sobre possíveis alagamentos em áreas de risco. Com base no volume de chuvas e dados geográficos, o sistema informa a população[...]
 
 Nosso objetivo é reduzir danos e salvar vidas, garantindo que as pessoas saibam o que fazer antes, durante e depois de uma emergência.
 
@@ -27,9 +27,9 @@ Nosso objetivo é reduzir danos e salvar vidas, garantindo que as pessoas saibam
 
 ### 🎨 Front-end:
 
-- HTML E CSS
+- HTML e CSS
 - Javascript
--  React.js
+- React.js
 
 ## Instalação
 
@@ -56,7 +56,103 @@ npm start
 http://localhost:3006
 ```
 3. Configure a área de monitoramento e visualize os alertas de risco.
- 
+
+## Modelagem de Dados
+
+```mermaid
+classDiagram
+    class alertas {
+        +id_alerta: PK
+        +data_hora: datetime
+    }
+
+    class alerta_publicacao_status {
+        +id_publicacao: PK, FK
+        +id_alerta: PK, FK
+    }
+
+    class alerta_endereco_status {
+        +id_alerta: PK, FK
+        +id_endereco: PK, FK
+    }
+
+    class alerta_ativo {
+        +id_usuario: PK, FK
+        +id_alerta: PK, FK
+    }
+
+    class administrador {
+        +id_adm: PK
+        +nome: string
+        +senha: string
+        +cpf: string
+        +crp: string
+        +id_monitorar: FK
+    }
+
+    class endereco {
+        +nome: string
+        +cep: string
+        +numero: string
+        +id_endereco: PK
+        +id_usuario: FK
+    }
+
+    class id_monitorar {
+        +id_usuario: PK, FK
+        +id_adm: PK, FK
+        +id_publicacao: PK, FK
+        +id_alerta: PK, FK
+    }
+
+    class usuario {
+        +id_usuario: PK
+        +nome: string
+        +email: string
+        +foto_perfil: string
+        +cpf: string
+    }
+
+    class publicacoes {
+        +id_publicacao: PK
+        +comentario: string
+        +data_hora: datetime
+        +video: string
+    }
+
+    class publicacao_endereco_status {
+        +nivel_de_alerta: string
+        +id_publicacao: PK, FK
+        +id_endereco: PK, FK
+    }
+
+    class publicacoes_feitas {
+        +id_usuario: PK, FK
+        +id_publicacao: PK, FK
+    }
+
+    %% Definição dos relacionamentos
+    alertas --> alerta_publicacao_status : "1,1 - 0,N"
+    alertas --> alerta_endereco_status : "1,1 - 0,N"
+    alertas --> alerta_ativo : "1,1 - 0,N"
+    alertas --> id_monitorar : "1,1 - 0,N"
+
+    usuario --> alerta_ativo : "1,1 - 0,N"
+    usuario --> id_monitorar : "1,1 - 0,N"
+    usuario --> publicacoes_feitas : "1,1 - 0,N"
+    usuario --> endereco : "1,1 - 0,N"
+
+    administrador --> id_monitorar : "1,1 - 0,N"
+
+    endereco --> alerta_endereco_status : "1,1 - 0,N"
+    endereco --> publicacao_endereco_status : "1,1 - 0,N"
+
+    publicacoes --> alerta_publicacao_status : "1,1 - 0,N"
+    publicacoes --> id_monitorar : "1,1 - 0,N"
+    publicacoes --> publicacoes_feitas : "1,1 - 0,N"
+    publicacoes --> publicacao_endereco_status : "1,1 - 0,N"
+```
+
 ## Autores
 
 Back-end:
@@ -69,8 +165,8 @@ Back-end:
 
 Front-end:
 
-- [Cláudia Ribeiro]()
-- [Evelyn Karoline]()
+- [Cláudia Ribeiro](https://github.com/GabrielBielFerreira)
+- [Evelyn Karoline](https://github.com/Evelynkaroline1)
 - [Gabriel de Figueiredo](https://github.com/Abell29)
-- [Gabriel Ferreira]()
+- [Gabriel Ferreira](https://github.com/GabrielBielFerreira)
 - [Maria Gabriella](https://github.com/mgabriiella)
